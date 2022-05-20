@@ -1,6 +1,6 @@
 name:                wai-middleware-bearer
 version:             1.0.0.0
-github:              "githubuser/wai-middleware-bearer"
+github:              "martin-bednar/wai-middleware-bearer"
 license:             BSD3
 author:              "Martin Bednar"
 maintainer:          "bednam17@fit.cvut.cz"
@@ -17,14 +17,14 @@ extra-source-files:
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/githubuser/wai-middleware-bearer#readme>
+description:         Please see the README on GitHub at <https://github.com/martin-bednar/wai-middleware-bearer#readme>
 
 dependencies:
 - base >= 4.7 && < 5
-- bytestring
-- word8
-- http-types
-- wai
+- bytestring >= 0.10.12.1 && < 1
+- word8 >= 0.1.3 && < 1
+- http-types >=0.12.3 && < 1
+- wai >= 3.2.3 && < 4
 
 library:
   source-dirs: src
