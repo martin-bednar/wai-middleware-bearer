@@ -1,0 +1,43 @@
+name:                wai-middleware-bearer
+version:             1.0.0.0
+github:              "githubuser/wai-middleware-bearer"
+license:             BSD3
+author:              "Martin Bednar"
+maintainer:          "bednam17@fit.cvut.cz"
+copyright:           "2022 Martin Bednar"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/githubuser/wai-middleware-bearer#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- bytestring
+- word8
+- http-types
+- wai
+
+library:
+  source-dirs: src
+
+tests:
+  wai-middleware-bearer-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - wai-middleware-bearer
+    - hspec
+    - hspec-wai
