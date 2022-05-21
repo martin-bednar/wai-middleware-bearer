@@ -6,7 +6,9 @@ cabal-version: 1.12
 
 name:           wai-middleware-bearer
 version:        1.0.0.0
+synopsis:       WAI middleware providing the Bearer Token HTTP authentication scheme.
 description:    Please see the README on GitHub at <https://github.com/martin-bednar/wai-middleware-bearer#readme>
+category:       Authentication
 homepage:       https://github.com/martin-bednar/wai-middleware-bearer#readme
 bug-reports:    https://github.com/martin-bednar/wai-middleware-bearer/issues
 author:         Martin Bednar
