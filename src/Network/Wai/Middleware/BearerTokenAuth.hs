@@ -2,7 +2,7 @@
 Module      : Network.Wai.Middleware.BearerTokenAuth
 Description : Implements HTTP Bearer Token Authentication.
 Copyright   : (c) Martin Bednar, 2022
-License     : GPL-3
+License     : MIT
 Maintainer  : bednam17@fit.cvut.cz
 Stability   : experimental
 Portability : POSIX
