@@ -10,7 +10,7 @@ extra-source-files:
 - README.md
 
 # Metadata used when publishing your package
-synopsis:            WAI Middleware for Bearer Token Authentication.
+synopsis:            WAI Middleware for Bearer Token Authentication
 category:            Authentication, Web
 
 # To avoid duplicated efforts in documentation and dealing with the
