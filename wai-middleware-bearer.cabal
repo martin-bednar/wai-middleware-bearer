@@ -5,7 +5,7 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           wai-middleware-bearer
-version:        1.0.1
+version:        1.0.2
 synopsis:       WAI middleware providing the Bearer Token HTTP authentication scheme.
 description:    Please see the README on GitHub at <https://github.com/martin-bednar/wai-middleware-bearer#readme>
 category:       Authentication, Web
@@ -14,7 +14,7 @@ bug-reports:    https://github.com/martin-bednar/wai-middleware-bearer/issues
 author:         Martin Bednar
 maintainer:     bednam17@fit.cvut.cz
 copyright:      2022 Martin Bednar
-license:        BSD3
+license:        MIT
 license-file:   LICENSE
 build-type:     Simple
 extra-source-files:
