@@ -1,5 +1,5 @@
 name:                wai-middleware-bearer
-version:             1.0.2
+version:             1.0.3
 github:              "martin-bednar/wai-middleware-bearer"
 license:             MIT
 author:              "Martin Bednar"
