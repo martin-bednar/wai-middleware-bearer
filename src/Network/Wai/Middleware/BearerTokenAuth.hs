@@ -1,14 +1,36 @@
+{-|
+Module      : Network.Wai.Middleware.BearerTokenAuth
+Description : Implements HTTP Bearer Token Authentication.
+Copyright   : (c) Martin Bednar, 2022
+License     : GPL-3
+Maintainer  : bednam17@fit.cvut.cz
+Stability   : experimental
+Portability : POSIX
+
+Implements Bearer Token Authentication as a WAI 'Middleware'.
+
+This module is based on 'Network.Wai.Middleware.HttpAuth'.
+
+-}
 {-# LANGUAGE OverloadedStrings #-}
 
--- | Implements HTTP Bearer Token Authentication.
---
--- This module is based on 'Network.Wai.Middleware.HttpAuth'.
+-- The implementation is based on 'Network.Wai.Middleware.HttpAuth'.
 
 module Network.Wai.Middleware.BearerTokenAuth
-  ( tokenAuth
+  ( -- * Middleware
+    --
+    -- | You can choose from three functions to use this middleware:
+    --
+    -- 1. 'tokenListAuth' is the simplest to use and accepts a list of valid tokens;
+    --
+    -- 2. 'tokenAuth' can be used to perform a more sophisticated validation of the accepted token (such as database lookup);
+    --
+    -- 3. 'tokenAuth'' is similar to 'tokenAuth', but it also passes the 'Request' to the validation function.
+    tokenListAuth
+  , tokenAuth
   , tokenAuth'
-  , tokenListAuth
-  , CheckToken
+    -- * Token validation
+  , TokenValidator
   ) where
 
 import Data.ByteString (ByteString)
@@ -17,28 +39,8 @@ import Data.Word8 (isSpace, toLower)
 import Network.HTTP.Types (hAuthorization, hContentType, status401)
 import Network.Wai (Middleware, Request(requestHeaders), Response, responseLBS)
 
--- | Check if a given token is valid.
-type CheckToken = ByteString -> IO Bool
-
--- | Perform token authentication.
---
--- If the token is accepted, leave the Application unchanged.
--- Otherwise, send a @401 Unauthorized@ HTTP response.
---
--- > tokenAuth (\tok -> return $ tok == "abcd" )
-tokenAuth :: CheckToken -> Middleware
-tokenAuth checker = tokenAuth' (const checker)
-
--- | Like 'tokenAuth', but also passes a request to the authentication function.
---
-tokenAuth' :: (Request -> CheckToken) -> Middleware
-tokenAuth' checkByReq app req sendRes = do
-  let checker = checkByReq req
-  let pass = app req sendRes
-  authorized <- check checker req
-  if authorized
-    then pass -- Pass the Application on successful auth
-    else sendRes rspUnauthorized -- Send a @401 Unauthorized@ response on failed auth
+-- | Type synonym for validating a token 
+type TokenValidator = ByteString -> IO Bool
 
 -- | Perform token authentication
 -- based on a list of allowed tokens.
@@ -47,7 +49,31 @@ tokenAuth' checkByReq app req sendRes = do
 tokenListAuth :: [ByteString] -> Middleware
 tokenListAuth tokens = tokenAuth (\tok -> return $ tok `elem` tokens)
 
-check :: CheckToken -> Request -> IO Bool
+-- | Performs token authentication.
+--
+-- If the token is accepted, leaves the Application unchanged.
+-- Otherwise, sends a @401 Unauthorized@ HTTP response.
+--
+-- > tokenAuth (\tok -> return $ tok == "abcd" )
+tokenAuth 
+  :: TokenValidator -- ^ Function that determines whether the token is valid 
+  -> Middleware
+tokenAuth checker = tokenAuth' (const checker)
+
+-- | Like 'tokenAuth', but also passes the 'Request' to the validator function.
+--
+tokenAuth' 
+  :: (Request -> TokenValidator) -- ^ Function that determines whether the token is valid
+  -> Middleware
+tokenAuth' checkByReq app req sendRes = do
+  let checker = checkByReq req
+  let pass = app req sendRes
+  authorized <- check checker req
+  if authorized
+    then pass -- Pass the Application on successful auth
+    else sendRes rspUnauthorized -- Send a @401 Unauthorized@ response on failed auth
+
+check :: TokenValidator -> Request -> IO Bool
 check checkCreds req =
   case extractBearerFromRequest req of
     Nothing -> return False

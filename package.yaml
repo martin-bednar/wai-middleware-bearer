@@ -1,5 +1,5 @@
 name:                wai-middleware-bearer
-version:             1.0.0.0
+version:             1.0.1
 github:              "martin-bednar/wai-middleware-bearer"
 license:             BSD3
 author:              "Martin Bednar"
@@ -8,11 +8,10 @@ copyright:           "2022 Martin Bednar"
 
 extra-source-files:
 - README.md
-- ChangeLog.md
 
 # Metadata used when publishing your package
 synopsis:            WAI middleware providing the Bearer Token HTTP authentication scheme.
-category:            Authentication
+category:            Authentication, Web
 
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
